@@ -1,11 +1,11 @@
 /*********************************************************************
- * \file   main.cpp
- * \brief
- *
- * \author Harukichimaru
- * \date   January 2025
- * \note
- *********************************************************************/
+* \file   main.cpp
+* \brief
+*
+* \author Harukichimaru
+* \date   January 2025
+* \note
+*********************************************************************/
 #include <Novice.h>
 const char kWindowTitle[] = "学籍番号";
 //PI
@@ -62,6 +62,24 @@ Matrix4x4 MakeRotateAxisMatrix(const Vector3 &axis, float angle) {
 }
 
 ///=============================================================================
+/// 2つのベクトルのなす角度を求める
+Vector3 OrthogonalVector(const Vector3 &v) {
+	if(fabs(v.x) < fabs(v.y)) {
+		if(fabs(v.x) < fabs(v.z)) {
+			return { 0.0f, -v.z, v.y };
+		} else {
+			return { -v.y, v.x, 0.0f };
+		}
+	} else {
+		if(fabs(v.y) < fabs(v.z)) {
+			return { v.z, 0.0f, -v.x };
+		} else {
+			return { -v.y, v.x, 0.0f };
+		}
+	}
+}
+
+///=============================================================================
 ///						ある方向からある方向への回転行列作成
 Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to) {
 	Vector3 f = Normalize(from);
@@ -84,24 +102,6 @@ Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to) {
 	} else {
 		float angle = acosf(dot);
 		return MakeRotateAxisMatrix(axis, angle);
-	}
-}
-
-///=============================================================================
-///  
-Vector3 OrthogonalVector(const Vector3 &v) {
-	if(fabs(v.x) < fabs(v.y)) {
-		if(fabs(v.x) < fabs(v.z)) {
-			return { 0.0f, -v.z, v.y };
-		} else {
-			return { -v.y, v.x, 0.0f };
-		}
-	} else {
-		if(fabs(v.y) < fabs(v.z)) {
-			return { v.z, 0.0f, -v.x };
-		} else {
-			return { -v.y, v.x, 0.0f };
-		}
 	}
 }
 
