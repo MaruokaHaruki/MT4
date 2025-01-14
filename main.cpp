@@ -24,6 +24,7 @@ const float PI = 3.14159265358979323846f;
 #include "AffineTransformations.h"
 #include "MathFunc4x4.h"
 #include "RenderingMatrices.h"
+#include "Quaternion.h"
 
 ///=============================================================================
 ///						任意軸回転行列作成
@@ -116,6 +117,11 @@ void ScreenPrintMatrix(const char *name, const Matrix4x4 &m, int x, int y) {
 	Novice::ScreenPrintf(x, y + 80, "%.3f %.3f %.3f %.3f", m.m[3][0], m.m[3][1], m.m[3][2], m.m[3][3]);
 }
 
+void ScreenPrintQuaternion(const char *name, const Quaternion &q, int x, int y) {
+	Novice::ScreenPrintf(x, y, name);
+	Novice::ScreenPrintf(x, y + 20, "%.3f %.3f %.3f %.3f", q.x, q.y, q.z, q.w);
+}
+
 ///=============================================================================
 ///	Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -152,6 +158,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Matrix4x4 rotateMatrix1 = DirectionToDirection(from0, to0);
 	Matrix4x4 rotateMatrix2 = DirectionToDirection(from1, to1);
 
+	//========================================
+	// クオータニオン
+	Quaternion q1 = { 2.0f, 3.0f, 4.0f, 1.0f };
+	Quaternion q2 = { 1.0f, 3.0f, 5.0f, 2.0f };
+	Quaternion identity = Identity();
+	Quaternion conjugate = Conjugate(q1);
+	Quaternion inverse = Inverse(q1);
+	Quaternion normalize = Normalize(q1);
+	Quaternion mul1 = Multiply(q1, q2);
+	Quaternion mul2 = Multiply(q2, q1);
+	float norm = Norm(q1);
+
 	///--------------------------------------------------------------
 	/// ウィンドウの×ボタンが押されるまでループ
 	while(Novice::ProcessMessage() == 0) {
@@ -181,9 +199,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//========================================
 		// ある方向からある方向への回転行列の表示
-		ScreenPrintMatrix("RotateMatrix0", rotateMatrix0, 10, 10);
-		ScreenPrintMatrix("RotateMatrix1", rotateMatrix1, 10, 110);
-		ScreenPrintMatrix("RotateMatrix2", rotateMatrix2, 10, 210);
+		//ScreenPrintMatrix("RotateMatrix0", rotateMatrix0, 10, 10);
+		//ScreenPrintMatrix("RotateMatrix1", rotateMatrix1, 10, 110);
+		//ScreenPrintMatrix("RotateMatrix2", rotateMatrix2, 10, 210);
+
+		//========================================
+		// クオータニオンの表示
+		int y = 40;
+		ScreenPrintQuaternion("Identity", identity, 10, y * 1);
+		ScreenPrintQuaternion("Quaternion1", q1, 10, y * 2);
+		ScreenPrintQuaternion("Quaternion2", q2, 10, y * 3);
+		ScreenPrintQuaternion("Conjugate", conjugate, 10, y * 4);
+		ScreenPrintQuaternion("Inverse", inverse, 10, y * 5);
+		ScreenPrintQuaternion("Normalize", normalize, 10, y * 6);
+		ScreenPrintQuaternion("Multiply1", mul1, 10, y * 7);
+		ScreenPrintQuaternion("Multiply2", mul2, 10, y * 8);
+		Novice::ScreenPrintf(10, y*9, "Norm: %.3f", norm);
 
 		///
 		/// ↑描画処理ここまで
