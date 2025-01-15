@@ -38,6 +38,11 @@ struct Vector3 final{
 	bool operator!=(const Vector3& other) const {
 		return !(*this == other);
 	}
+
+	// 単項演算子
+	Vector3 operator-() const {
+		return { -x, -y, -z };
+	}
 };
 
 // 内積
@@ -73,4 +78,14 @@ inline float Length(const Vector3& v) { return std::sqrt(Dot(v, v)); }
 
 // 2つのベクトル間の距離を計算する関数
 inline float Distance(const Vector3& v1, const Vector3& v2) { return Length(v1 - v2); }
+
+// 外積
+inline Vector3 Cross(const Vector3 &v1, const Vector3 &v2) {
+	return {
+		v1.y * v2.z - v1.z * v2.y,
+		v1.z * v2.x - v1.x * v2.z,
+		v1.x * v2.y - v1.y * v2.x
+	};
+}
+
 

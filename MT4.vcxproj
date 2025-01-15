@@ -110,6 +110,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DirectXGame\3d\Camera.h" />
@@ -148,6 +149,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="math\structure\Vector2.h" />
     <ClInclude Include="math\structure\Vector3.h" />
     <ClInclude Include="math\structure\Vector4.h" />
+    <ClInclude Include="Quaternion.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
